@@ -72,6 +72,8 @@ class ProductServiceImplTest {
         // Vérifiez si le produit a été correctement ajouté à la base de données
         assertTrue(produitRecupere.isPresent());
         assertEquals(produitAjoute.getIdProduct(), produitRecupere.get().getIdProduct());
+        assertNotNull(produitAjoute, "The added product should not be null");
+
     }
 
     /*
