@@ -1,12 +1,19 @@
 package tn.esprit.devops_project;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
+
 import tn.esprit.devops_project.services.ProductServiceImpl;
-import tn.esprit.devops_project.services.StockServiceImpl;
 import tn.esprit.devops_project.entities.Product;
 import tn.esprit.devops_project.entities.Stock;
 import tn.esprit.devops_project.entities.ProductCategory;
@@ -18,18 +25,34 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
 @SpringBootTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
+@ExtendWith(MockitoExtension.class)
 
 class ProductServiceImplTest {
     @Autowired
-     ProductServiceImpl productService;
+    ProductServiceImpl productService;
     @Autowired
     StockRepository stockRepository;
     @Autowired
     ProductRepository productRepository;
+    @InjectMocks
+    private ProductServiceImpl productServiceM;
 
+    @Mock
+    private StockRepository stockRepositoryM;
+
+    @Mock
+    private ProductRepository productRepositoryM;
+
+    @BeforeEach
+    public void setup() {
+        //MockitoAnnotations.initMocks(this);
+    }
     @Test
     public void testAddProduct() {
 
@@ -50,6 +73,35 @@ class ProductServiceImplTest {
         assertTrue(produitRecupere.isPresent());
         assertEquals(produitAjoute.getIdProduct(), produitRecupere.get().getIdProduct());
     }
+
+    /*
+    @Test
+    public void testAddProductM() {
+        // Set up the behavior of the stockRepositoryM mock
+        Stock stock = new Stock();
+        stock.setIdStock(1L);
+        Mockito.when(stockRepositoryM.findById(1L)).thenReturn(Optional.of(stock));
+
+        // Set up the behavior of the productRepositoryM mock
+        Product savedProduct = new Product();  // Define the expected saved product
+        Mockito.when(productRepositoryM.save(Mockito.any(Product.class))).thenReturn(savedProduct);
+
+        // Call the method to be tested
+        Product product = new Product();
+        product.setStock(stock);
+        Product produitAjoute = productServiceM.addProduct(product, 1L);
+
+        // Verify if the method save of the mock ProductRepository has been called
+        Mockito.verify(productRepositoryM).save(Mockito.any(Product.class));
+
+        // Verify the results of the test
+        assertNotNull(produitAjoute);
+        assertEquals(1L, produitAjoute.getStock().getIdStock());
+    }
+
+*/
+
+
 
     @Test
     public void testRetrieveProduct() {
@@ -147,4 +199,27 @@ class ProductServiceImplTest {
         assertEquals(2, produitsRécupérés.size());
     }
 
+    /*
+    @Test
+    public void testRetrieveProductStockM() {
+        Stock stockFictif = new Stock();
+        stockFictif.setTitle("Stock Test");
+        stockFictif = stockRepository.save(stockFictif);
+
+        Product produit1 = new Product();
+        produit1.setStock(stockFictif);
+        productRepository.save(produit1);
+
+
+        Product produit2 = new Product();
+        produit2.setStock(stockFictif);
+        productRepository.save(produit2);
+
+        Mockito.when(productRepositoryM.findByStockIdStock(stockFictif.getIdStock())).thenReturn(Arrays.asList(produit1, produit2));
+
+        List<Product> produitsRecuperes = productServiceM.retreiveProductStock(stockFictif.getIdStock());
+
+        assertNotNull(produitsRecuperes);
+        assertEquals(2, produitsRecuperes.size());
+    }*/
 }
