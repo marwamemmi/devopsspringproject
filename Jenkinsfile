@@ -31,16 +31,11 @@ pipeline{
             }
         }
 
-     stage('SonarQube Analysis'){
-                     steps {
-                         sh """mvn sonar:sonar -DskipTests \
-                                 -Dsonar.language=java \
-
-
-                         """
-                     }
-
-                 }
+    stage('SonarQube Analysis') {
+        steps {
+            sh 'mvn sonar:sonar -Dsonar.language=java'
+        }
+    }
 
     }
 }
