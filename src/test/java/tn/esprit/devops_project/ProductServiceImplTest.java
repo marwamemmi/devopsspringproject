@@ -50,11 +50,11 @@ class ProductServiceImplTest {
     private ProductRepository productRepositoryM;
 
     @BeforeEach
-    public void setup() {
+     void setup() {
         //MockitoAnnotations.initMocks(this);
     }
     @Test
-    public void testAddProduct() {
+     void testAddProduct() {
 
         Stock stock = new Stock();
         stock.setIdStock(1L);
@@ -63,13 +63,12 @@ class ProductServiceImplTest {
         Product product = new Product();
         product.setStock(stock);
 
-        // Appelez la méthode à tester
+
         Product produitAjoute = productService.addProduct(product, 1L);
 
-        // Récupérez le produit de la base de données
+
         Optional<Product> produitRecupere = productRepository.findById(produitAjoute.getIdProduct());
 
-        // Vérifiez si le produit a été correctement ajouté à la base de données
         assertTrue(produitRecupere.isPresent());
         assertEquals(produitAjoute.getIdProduct(), produitRecupere.get().getIdProduct());
         assertNotNull(produitAjoute, "The added product should not be null");
@@ -106,23 +105,20 @@ class ProductServiceImplTest {
 
 
     @Test
-    public void testRetrieveProduct() {
-        // Créez un produit réel et ajoutez-le à la base de données
+     void testRetrieveProduct() {
+
         Product produitFictif = new Product();
         produitFictif.setTitle("Produit Test");
         produitFictif = productRepository.save(produitFictif);
 
-        // Appelez la méthode à tester
         Product produitRecupere = productService.retrieveProduct(produitFictif.getIdProduct());
 
-        // Vérifiez si le produit récupéré est correct
         assertNotNull(produitRecupere);
         assertEquals(produitFictif.getIdProduct(), produitRecupere.getIdProduct());
     }
 
     @Test
-    public void testRetreiveAllProduct() {
-        // Créez plusieurs produits réels et ajoutez-les à la base de données
+     void testRetreiveAllProduct() {
         Product produit1 = new Product();
         produit1.setTitle("Produit 1");
         productRepository.save(produit1);
@@ -131,60 +127,45 @@ class ProductServiceImplTest {
         produit2.setTitle("Produit 2");
         productRepository.save(produit2);
 
-        // Appelez la méthode à tester
         List<Product> produitsRécupérés = productService.retreiveAllProduct();
 
-        // Vérifiez si la liste de produits récupérés est correcte
         assertNotNull(produitsRécupérés);
         assertEquals(2, produitsRécupérés.size());
     }
 
     @Test
-    public void testRetrieveProductByCategory() {
-        // Créez une catégorie fictive
+     void testRetrieveProductByCategory() {
         ProductCategory categorieFictive = ProductCategory.ELECTRONICS;
 
-        // Créez plusieurs produits réels avec la même catégorie et ajoutez-les à la base de données
-        Product produit1 = new Product();
+          Product produit1 = new Product();
         produit1.setCategory(categorieFictive);
         productRepository.save(produit1);
 
         Product produit2 = new Product();
         produit2.setCategory(categorieFictive);
         productRepository.save(produit2);
-
-        // Appelez la méthode à tester
-        List<Product> produitsRécupérés = productService.retrieveProductByCategory(categorieFictive);
-
-        // Vérifiez si la liste de produits récupérés est correcte
+     List<Product> produitsRécupérés = productService.retrieveProductByCategory(categorieFictive);
         assertNotNull(produitsRécupérés);
         assertEquals(2, produitsRécupérés.size());
     }
 
     @Test
-    public void testDeleteProduct() {
-        // Créez un produit réel et ajoutez-le à la base de données
+     void testDeleteProduct() {
         Product produitFictif = new Product();
         produitFictif.setTitle("Produit à supprimer");
         produitFictif = productRepository.save(produitFictif);
-
-        // Appelez la méthode à tester pour supprimer le produit
-        Long productId = produitFictif.getIdProduct(); // Store the product ID in a final variable
+        Long productId = produitFictif.getIdProduct();
         productService.deleteProduct(productId);
-
-        // Vérifiez que le produit a été supprimé en essayant de le récupérer
         assertThrows(NoSuchElementException.class, () -> productRepository.findById(productId).get());
     }
 
 
     @Test
-    public void testRetreiveProductStock() {
-        // Créez un stock réel et ajoutez-le à la base de données
+     void testRetreiveProductStock() {
         Stock stockFictif = new Stock();
         stockFictif.setTitle("Stock Test");
         stockFictif = stockRepository.save(stockFictif);
 
-        // Créez plusieurs produits réels associés au même stock et ajoutez-les à la base de données
         Product produit1 = new Product();
         produit1.setStock(stockFictif);
         productRepository.save(produit1);
@@ -193,10 +174,8 @@ class ProductServiceImplTest {
         produit2.setStock(stockFictif);
         productRepository.save(produit2);
 
-        // Appelez la méthode à tester
         List<Product> produitsRécupérés = productService.retreiveProductStock(stockFictif.getIdStock());
 
-        // Vérifiez si la liste de produits récupérés est correcte
         assertNotNull(produitsRécupérés);
         assertEquals(2, produitsRécupérés.size());
     }
