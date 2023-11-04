@@ -31,11 +31,12 @@ pipeline{
             }
         }
 
-    stage('SonarQube Analysis') {
-        steps {
-            sh 'mvn sonar:sonar -Dsonar.language=java'
-        }
-    }
+ stage('SonarQube Analysis') {
+     steps {
+         sh 'mvn sonar:sonar -Dsonar.language=java -Dsonar.login=admin -Dsonar.password=sonar'
+     }
+ }
+
 
     }
 }
