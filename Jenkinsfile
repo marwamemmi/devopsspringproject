@@ -46,13 +46,7 @@ pipeline{
                 archiveArtifacts(artifacts: 'target/*.jar', allowEmptyArchive: true)
             }
         }
-        stage('Publish to Nexus') {
-            steps {
-                withMaven(mavenSettingsConfig: '5d2b2f5d69be') {
-                    sh 'mvn deploy'
-                }
-            }
-        }
+   
 
         stage('Build Docker Image') {
             steps {
