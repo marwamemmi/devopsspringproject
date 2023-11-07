@@ -20,13 +20,14 @@ import tn.esprit.devops_project.entities.ProductCategory;
 import tn.esprit.devops_project.repositories.StockRepository;
 import tn.esprit.devops_project.repositories.ProductRepository;
 
+import javax.transaction.Transactional;
+import java.util.Arrays;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @SpringBootTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
@@ -35,25 +36,22 @@ import static org.mockito.Mockito.when;
 
 class ProductServiceImplTest {
     @Autowired
+   // @InjectMocks
     ProductServiceImpl productService;
     @Autowired
+    //@Mock
     StockRepository stockRepository;
     @Autowired
+    //@Mock
     ProductRepository productRepository;
-    @InjectMocks
-    private ProductServiceImpl productServiceM;
 
-    @Mock
-    private StockRepository stockRepositoryM;
-
-    @Mock
-    private ProductRepository productRepositoryM;
 
     @BeforeEach
      void setup() {
-        //MockitoAnnotations.initMocks(this);
+        MockitoAnnotations.initMocks(this);
     }
     @Test
+    @Transactional
      void testAddProduct() {
 
         Stock stock = new Stock();
@@ -75,36 +73,33 @@ class ProductServiceImplTest {
 
     }
 
-    /*
+/*
     @Test
-    public void testAddProductM() {
-        // Set up the behavior of the stockRepositoryM mock
+     void testAddProductM() {
         Stock stock = new Stock();
         stock.setIdStock(1L);
-        Mockito.when(stockRepositoryM.findById(1L)).thenReturn(Optional.of(stock));
+        Mockito.when(stockRepository.findById(1L)).thenReturn(Optional.of(stock));
 
-        // Set up the behavior of the productRepositoryM mock
-        Product savedProduct = new Product();  // Define the expected saved product
-        Mockito.when(productRepositoryM.save(Mockito.any(Product.class))).thenReturn(savedProduct);
+        Product savedProduct = new Product();
+        Mockito.when(productRepository.save(Mockito.any(Product.class))).thenReturn(savedProduct);
 
-        // Call the method to be tested
         Product product = new Product();
         product.setStock(stock);
-        Product produitAjoute = productServiceM.addProduct(product, 1L);
+        Product produitAjoute = productService.addProduct(product, 1L);
 
-        // Verify if the method save of the mock ProductRepository has been called
-        Mockito.verify(productRepositoryM).save(Mockito.any(Product.class));
+         Mockito.verify(productRepository).save(Mockito.any(Product.class));
 
         // Verify the results of the test
         assertNotNull(produitAjoute);
         assertEquals(1L, produitAjoute.getStock().getIdStock());
     }
-
 */
 
 
 
+
     @Test
+    @Transactional
      void testRetrieveProduct() {
 
         Product produitFictif = new Product();
@@ -117,7 +112,33 @@ class ProductServiceImplTest {
         assertEquals(produitFictif.getIdProduct(), produitRecupere.getIdProduct());
     }
 
-    @Test
+
+   /* @Test
+    @Transactional
+    public void testRetreiveAllProductM() {
+        Product product1 = new Product();
+        product1.setIdProduct(1L);
+        product1.setTitle("Product 1");
+
+        Product product2 = new Product();
+        product2.setIdProduct(2L);
+        product2.setTitle("Product 2");
+
+        List<Product> sampleProducts = Arrays.asList(product1, product2);
+
+        when(productRepository.findAll()).thenReturn(sampleProducts);
+
+        List<Product> retrievedProducts = productService.retreiveAllProduct();
+
+
+        assertEquals(sampleProducts.size(), retrievedProducts.size());
+        assertEquals(sampleProducts, retrievedProducts);
+
+
+        verify(productRepository, times(1)).findAll();
+    }*/
+   @Test
+   @Transactional
      void testRetreiveAllProduct() {
         Product produit1 = new Product();
         produit1.setTitle("Produit 1");
@@ -161,6 +182,7 @@ class ProductServiceImplTest {
 
 
     @Test
+    @Transactional
      void testRetreiveProductStock() {
         Stock stockFictif = new Stock();
         stockFictif.setTitle("Stock Test");
@@ -180,9 +202,10 @@ class ProductServiceImplTest {
         assertEquals(2, produitsRécupérés.size());
     }
 
-    /*
-    @Test
-    public void testRetrieveProductStockM() {
+
+   /* @Test
+    @Transactional
+     void testRetrieveProductStockM() {
         Stock stockFictif = new Stock();
         stockFictif.setTitle("Stock Test");
         stockFictif = stockRepository.save(stockFictif);
@@ -196,9 +219,9 @@ class ProductServiceImplTest {
         produit2.setStock(stockFictif);
         productRepository.save(produit2);
 
-        Mockito.when(productRepositoryM.findByStockIdStock(stockFictif.getIdStock())).thenReturn(Arrays.asList(produit1, produit2));
+        Mockito.when(productRepository.findByStockIdStock(stockFictif.getIdStock())).thenReturn(Arrays.asList(produit1, produit2));
 
-        List<Product> produitsRecuperes = productServiceM.retreiveProductStock(stockFictif.getIdStock());
+        List<Product> produitsRecuperes = productService.retreiveProductStock(stockFictif.getIdStock());
 
         assertNotNull(produitsRecuperes);
         assertEquals(2, produitsRecuperes.size());

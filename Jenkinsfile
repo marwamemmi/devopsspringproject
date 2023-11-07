@@ -53,6 +53,10 @@ pipeline{
                 sh 'docker build -t marwamemmi/alpine:1.0.0  .'
             }
         }
-
+     stage('Docker Compose') {
+            steps {
+                sh 'docker-compose up -d'
+            }
+        }
     }
 }
