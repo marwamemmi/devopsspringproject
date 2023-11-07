@@ -46,7 +46,7 @@ pipeline{
                 archiveArtifacts(artifacts: 'target/*.jar', allowEmptyArchive: true)
             }
         }
-   
+
 
         stage('Build Docker Image') {
             steps {
