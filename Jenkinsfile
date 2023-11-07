@@ -24,12 +24,6 @@ pipeline{
             
         }
         
-        
-        stage('UNIT test'){
-            steps{
-                sh 'mvn test'
-            }
-        }
 
  stage('SonarQube Analysis') {
      steps {
@@ -42,6 +36,16 @@ pipeline{
             }
         }
 
+        stage('UNIT test'){
+            steps{
+                sh 'mvn test'
+            }
+        }
+     stage('Archive Artifacts') {
+            steps {
+                archiveArtifacts(artifacts: 'target/*.jar', allowEmptyArchive: true)
+            }
+        }
         stage('Publish to Nexus') {
             steps {
                 withMaven(mavenSettingsConfig: '5d2b2f5d69be') {
