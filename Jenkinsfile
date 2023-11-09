@@ -21,7 +21,7 @@ pipeline{
             steps {
                 sh 'mvn compile '
             }
-            
+
         }
         
 
@@ -46,6 +46,19 @@ pipeline{
                 archiveArtifacts(artifacts: 'target/*.jar', allowEmptyArchive: true)
             }
         }
+  stage('Publish to Nexus') {
+      steps {
+          script {
+               def nexusContainerId = sh(script: 'docker ps -qf "ancestor=sonatype/nexus3:latest"', returnStdout: true).trim()
+
+               echo "Nexus Container ID: ${nexusContainerId}"
+
+               withMaven(mavenSettingsConfig: '1927d0d9b2bb') {
+                  sh "docker exec -i ${nexusContainerId} mvn deploy"
+              }
+          }
+      }
+  }
 
 
         stage('Build Docker Image') {
