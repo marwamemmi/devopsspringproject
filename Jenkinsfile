@@ -61,11 +61,13 @@ pipeline{
             }
         }
 
-  stage('Publish to Nexus'){
-             steps{
-                 sh 'mvn deploy -DskipTests'
-             }
-         }
-    }
+    stage("Nexus Deploy Stage") {
+            steps {
+                withMaven(maven: 'mvn') {
+                    sh 'mvn deploy -DskipTests'
+                }
+            }
+        }
+
 
 }
