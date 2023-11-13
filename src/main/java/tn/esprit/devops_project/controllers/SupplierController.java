@@ -23,11 +23,4 @@ public class SupplierController {
 		return supplierService.retrieveSupplier(supplierId);
 	}
 
-
-	@DeleteMapping("/supplier/{supplierId}")
-	public void removeFournisseur(@PathVariable Long supplierId) {
-		supplierService.deleteSupplier(supplierId);
-	}
-
-
 }
