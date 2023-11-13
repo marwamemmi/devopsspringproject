@@ -6,10 +6,10 @@ import org.springframework.test.context.ActiveProfiles;
 
 @SpringBootApplication
 @ActiveProfiles("test")
-public class DevOps_ProjectSpringBootApplication {
+public class DevOpsProjectSpringBootApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(DevOps_ProjectSpringBootApplication.class, args);
+        SpringApplication.run(DevOpsProjectSpringBootApplication.class, args);
     }
 
 }

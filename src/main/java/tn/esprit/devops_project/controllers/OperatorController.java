@@ -23,20 +23,12 @@ public class OperatorController {
 		return operatorService.retrieveOperator(operatorId);
 	}
 
-	@PostMapping("/operator")
-	public Operator addOperator(@RequestBody Operator operator) {
-		return operatorService.addOperator(operator);
-	}
 
 	@DeleteMapping("/operatot/{operatorId}")
 	public void removeOperator(@PathVariable Long operatorId) {
 		operatorService.deleteOperator(operatorId);
 	}
 
-	@PutMapping("/operator")
-	public Operator modifyOperateur(@RequestBody Operator operator) {
-		return operatorService.updateOperator(operator);
-	}
 
 	
 }

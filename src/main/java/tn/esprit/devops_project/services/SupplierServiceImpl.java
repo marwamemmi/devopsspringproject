@@ -7,7 +7,7 @@ import tn.esprit.devops_project.entities.Supplier;
 import tn.esprit.devops_project.repositories.SupplierRepository;
 import tn.esprit.devops_project.services.Iservices.ISupplierService;
 
-import java.util.Date;
+
 import java.util.List;
 
 @Service
@@ -33,11 +33,7 @@ public class SupplierServiceImpl implements ISupplierService {
 		return  supplierRepository.save(supplier);
 	}
 
-	@Override
-	public void deleteSupplier(Long SupplierId) {
-		supplierRepository.deleteById(SupplierId);
 
-	}
 
 	@Override
 	public Supplier retrieveSupplier(Long supplierId) {

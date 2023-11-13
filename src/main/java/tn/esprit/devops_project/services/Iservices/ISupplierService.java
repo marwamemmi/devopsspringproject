@@ -10,7 +10,6 @@ public interface ISupplierService {
 
 	Supplier addSupplier(Supplier supplier);
 
-	void deleteSupplier(Long id);
 
 	Supplier updateSupplier(Supplier supplier);
 

@@ -31,15 +31,7 @@ public class InvoiceServiceImpl implements IInvoiceService {
 	public List<Invoice> retrieveAllInvoices() {
 		return invoiceRepository.findAll();
 	}
-	@Override
-	public void cancelInvoice(Long invoiceId) {
-		// method 01
-		Invoice invoice = invoiceRepository.findById(invoiceId).orElseThrow(() -> new NullPointerException("Invoice not found"));
-		invoice.setArchived(true);
-		invoiceRepository.save(invoice);
-		//method 02 (Avec JPQL)
-		invoiceRepository.updateInvoice(invoiceId);
-	}
+
 
 	@Override
 	public Invoice retrieveInvoice(Long invoiceId) {
@@ -47,11 +39,7 @@ public class InvoiceServiceImpl implements IInvoiceService {
 		return invoiceRepository.findById(invoiceId).orElseThrow(() -> new NullPointerException("Invoice not found"));
 	}
 
-	@Override
-	public List<Invoice> getInvoicesBySupplier(Long idSupplier) {
-		Supplier supplier = supplierRepository.findById(idSupplier).orElseThrow(() -> new NullPointerException("Supplier not found"));
-		return (List<Invoice>) supplier.getInvoices();
-	}
+
 
 	@Override
 	public void assignOperatorToInvoice(Long idOperator, Long idInvoice) {
