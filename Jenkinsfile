@@ -1,6 +1,8 @@
 pipeline{
     agent any
-
+    environment {
+        ERREUR_SOURCE = "Votre source d'erreur ici"
+    }
     stages{
 
 
