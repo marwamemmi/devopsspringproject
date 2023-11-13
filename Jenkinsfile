@@ -68,6 +68,16 @@ pipeline{
                 }
             }
         }
-
+post {
+        always {
+            // Vérifier si le build a échoué
+            script {
+                if (currentBuild.resultIsWorseThan('SUCCESS')) {
+                    // En cas d'échec, envoyer un e-mail avec la source de l'erreur
+                    sh './script_envoi_email.sh'
+                }
+            }
+        }
+    }
 
 }
