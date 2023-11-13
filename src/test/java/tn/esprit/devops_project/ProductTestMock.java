@@ -22,7 +22,7 @@ import static org.mockito.Mockito.when;
 
 
 @ExtendWith(MockitoExtension.class)
-class ProductTestMock {
+class ProductTest {
 
 
     @Mock
@@ -59,8 +59,8 @@ class ProductTestMock {
         when(productRepository.findAll()).thenReturn(listProducts);
         List<Product> actualProducts = productService.retreiveAllProduct();
 
-        Assertions.assertThat(actualProducts).isEqualTo(listProducts);
-        Assertions.assertThat(actualProducts).containsExactlyInAnyOrderElementsOf(listProducts);
+        Assertions.assertThat(actualProducts).isEqualTo(listProducts)
+                .containsExactlyInAnyOrderElementsOf(listProducts);
 
         for (Product actualProduct : actualProducts) {
             Product expectedProduct = listProducts.stream()

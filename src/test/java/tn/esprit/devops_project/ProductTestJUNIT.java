@@ -33,30 +33,23 @@ class ProductTestJUNIT {
     StockRepository stockRepository;
     @Test
      void FindProductByCategory() {
-        //Arrange
         Product product = Product.builder().idProduct(1L).category(ProductCategory.BOOKS).title("test").stock(null).quantity(2).price(20.20f).build();
         Product savedProduct = productRepository.save(product);
 
         List<Product> ProdbyCategory = productRepository.findByCategory(ProductCategory.BOOKS);
+        Assertions.assertThat(ProdbyCategory).hasSize(1).containsExactly(savedProduct);
 
-        Assertions.assertThat(ProdbyCategory.size()).isEqualTo(1);
-        Assertions.assertThat(ProdbyCategory.get(0)).isEqualTo(savedProduct);
     }
 
     @Test
-    public void Find2ProductByCategory() {
+     void Find2ProductByCategory() {
         Product product1 = Product.builder().category(ProductCategory.BOOKS).title("test1").stock(null).quantity(2).price(20.20f).build();
-
         Product product2 = Product.builder().category(ProductCategory.BOOKS).title("test2").stock(null).quantity(2).price(20.20f).build();
 
         Product savedProduct1 = productRepository.save(product1);
         Product savedProduct2 = productRepository.save(product2);
         List<Product> byCategory = productRepository.findByCategory(ProductCategory.BOOKS);
-
-        Assertions.assertThat(byCategory.size()).isEqualTo(2);
-
-        Assertions.assertThat(byCategory).contains(savedProduct1, savedProduct2);
-
+        Assertions.assertThat(byCategory).hasSize(2).contains(savedProduct1, savedProduct2);
         for (Product product : byCategory) {
             Assertions.assertThat(product.getCategory()).isEqualTo(ProductCategory.BOOKS);
             Assertions.assertThat(product.getQuantity()).isEqualTo(2);
@@ -65,7 +58,7 @@ class ProductTestJUNIT {
     }
 
     @Test
-    public void FindProductByStockId(){
+     void FindProductByStockId(){
 
         Stock stock = Stock.builder().idStock(1L).title("hello").products(new HashSet<>()).build();
         stockRepository.save(stock);
@@ -79,9 +72,7 @@ class ProductTestJUNIT {
 
         List<Product> byStockIdStock = productRepository.findByStockIdStock(stock.getIdStock());
 
-        Assertions.assertThat(byStockIdStock.size()).isEqualTo(2);
-
-        Assertions.assertThat(byStockIdStock).contains(savedProduct1, savedProduct2);
+        Assertions.assertThat(byStockIdStock).hasSize(2).contains(savedProduct1, savedProduct2);
 
         for (Product product : byStockIdStock) {
             Assertions.assertThat(product.getStock()).isEqualTo(stock);
