@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.devops_project.entities.Product;
 import tn.esprit.devops_project.entities.ProductCategory;
-import tn.esprit.devops_project.services.Iservices.IProductService;
+import tn.esprit.devops_project.services.IProductService;
 
 import java.util.List;
 

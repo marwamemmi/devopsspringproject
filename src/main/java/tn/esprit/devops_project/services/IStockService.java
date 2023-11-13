@@ -1,4 +1,4 @@
-package tn.esprit.devops_project.services.Iservices;
+package tn.esprit.devops_project.services;
 
 import tn.esprit.devops_project.entities.Stock;
 

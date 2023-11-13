@@ -3,7 +3,7 @@ package tn.esprit.devops_project.controllers;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.devops_project.entities.Supplier;
-import tn.esprit.devops_project.services.Iservices.ISupplierService;
+import tn.esprit.devops_project.services.ISupplierService;
 import java.util.List;
 
 

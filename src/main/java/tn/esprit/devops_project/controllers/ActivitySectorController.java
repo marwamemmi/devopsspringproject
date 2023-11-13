@@ -4,7 +4,7 @@ package tn.esprit.devops_project.controllers;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.devops_project.entities.ActivitySector;
-import tn.esprit.devops_project.services.Iservices.IActivitySector;
+import tn.esprit.devops_project.services.IActivitySector;
 
 import java.util.List;
 
@@ -26,7 +26,7 @@ public class ActivitySectorController {
         activitySectorService.deleteActivitySector(id);
     }
 
- 
+
     @GetMapping("/activitySector/{id}")
     ActivitySector retrieveActivitySector(@PathVariable Long id){
         return activitySectorService.retrieveActivitySector(id);
