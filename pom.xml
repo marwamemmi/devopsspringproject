@@ -15,10 +15,10 @@
     <description>DevOps_Project</description>
     <properties>
         <java.version>11</java.version>
-
-            <sonar.host.url>http://localhost:9000</sonar.host.url>
-            <sonar.login>squ_267f8f36bb6e4e08f8aca207014b01901b0adc58</sonar.login>
-
+        <sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
+        <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
+        <sonar.jacoco.reportPath>./target/jacoco.exec</sonar.jacoco.reportPath>
+        <sonar.language>java</sonar.language>
     </properties>
 
     <dependencies>
@@ -84,6 +84,11 @@
             <artifactId>mockito-all</artifactId>
             <version>1.10.19</version>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jacoco</groupId>
+            <artifactId>jacoco-maven-plugin</artifactId>
+            <version>0.8.6</version>
         </dependency>
     </dependencies>
     <distributionManagement>
