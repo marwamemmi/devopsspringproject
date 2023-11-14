@@ -75,12 +75,13 @@ stage("Nexus Deploy Stage") {
                     sh 'mvn deploy -DskipTests'
                 }
             } catch (Exception e) {
-                 echo "Le déploiement a échoué. Voici les détails de l'erreur : ${e.message}"
+                echo "Le déploiement a échoué. Voici les détails de l'erreur : ${e.message}"
                 currentBuild.result = 'FAILURE'
             }
         }
     }
 }
+
 
         
 }
