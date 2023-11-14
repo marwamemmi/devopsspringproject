@@ -76,15 +76,9 @@ pipeline{
             }
         }
 
- stage("Nexus Deploy Stage") {
-     steps {
-         withMaven(maven: 'mvn') {
-             sh 'mvn deploy -DskipTests -X'
-         }
-     }
- }
 
-  stage("Publish to Nexus Repository Manager") {
+
+  stage("Nexus Deploy Stage") {
             steps {
                 script {
                     pom = readMavenPom file: "pom.xml";
