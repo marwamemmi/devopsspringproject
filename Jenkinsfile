@@ -24,22 +24,27 @@ pipeline{
         }
         
 
- stage('SonarQube Analysis') {
-     steps {
-         sh 'mvn sonar:sonar -Dsonar.language=java -Dsonar.login=admin -Dsonar.password=sonar'
+ stage('Collect JaCoCo Coverage') {
+             steps{
+                    jacoco(execPattern: '**/target/jacoco.exec')
      }
- }
-   stage('Code Coverage') {
-            steps {
-                sh 'mvn jacoco:report'
-            }
-        }
+         }
 
-        stage('UNIT test'){
-            steps{
-                sh 'mvn test'
-            }
-        }
+     stage('JUNIT TEST with JaCoCo') {
+       steps {
+         sh 'mvn test jacoco:report'
+         echo 'Test stage done'
+       }
+     }
+     stage('SonarQube Analysis') {
+
+   steps {
+     withSonarQubeEnv('sonar-scanner') {
+       sh 'mvn sonar:sonar'
+     }
+   }
+ }
+
      stage('Archive Artifacts') {
             steps {
                 archiveArtifacts(artifacts: 'target/*.jar', allowEmptyArchive: true)
