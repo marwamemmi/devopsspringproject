@@ -15,6 +15,10 @@
     <description>DevOps_Project</description>
     <properties>
         <java.version>11</java.version>
+
+            <sonar.host.url>http://localhost:9000</sonar.host.url>
+            <sonar.login>squ_267f8f36bb6e4e08f8aca207014b01901b0adc58</sonar.login>
+
     </properties>
 
     <dependencies>
@@ -107,7 +111,7 @@
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.8.7</version> <!-- Use the latest version -->
+                <version>0.8.7</version>
                 <executions>
                     <execution>
                         <goals>
