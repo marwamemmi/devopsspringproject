@@ -1,5 +1,6 @@
 pipeline{
     agent any
+
     stages{
 
 
@@ -7,14 +8,14 @@ pipeline{
                 steps {
                     git branch: 'master', url: 'https://github.com/marwamemmi/devopsspringproject.git'
                 }
-                
+
             }
-      
+
       stage('Clean'){
             steps {
                 sh 'mvn clean '
             }
-            
+
         }
         stage('Compile'){
             steps {
@@ -22,7 +23,7 @@ pipeline{
             }
 
         }
-        
+
 
  stage('Collect JaCoCo Coverage') {
              steps{
@@ -36,7 +37,7 @@ pipeline{
          echo 'Test stage done'
        }
      }
-     stage('SonarQube Analysis') {
+ stage('SonarQube Analysis') {
 
    steps {
      withSonarQubeEnv('sonar-scanner') {
@@ -44,6 +45,7 @@ pipeline{
      }
    }
  }
+
 
      stage('Archive Artifacts') {
             steps {
@@ -68,7 +70,7 @@ pipeline{
  stage("Nexus Deploy Stage") {
      steps {
          withMaven(maven: 'mvn') {
-             sh 'mvn deploy -DskipTests -X'
+             sh 'mvn deploy -DskipTests'
          }
      }
  }
