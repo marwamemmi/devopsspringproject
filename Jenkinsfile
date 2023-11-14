@@ -37,10 +37,14 @@ pipeline{
        }
      }
  stage('SonarQube Analysis') {
-     steps {
-         sh 'mvn sonar:sonar -Dsonar.language=java -Dsonar.login=admin -Dsonar.password=sonar'
+
+   steps {
+     withSonarQubeEnv('sonar-scanner') {
+       sh 'mvn sonar:sonar'
      }
+   }
  }
+
 
      stage('Archive Artifacts') {
             steps {
