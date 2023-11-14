@@ -36,13 +36,10 @@ pipeline{
          echo 'Test stage done'
        }
      }
-     stage('SonarQube Analysis') {
-
-   steps {
-     withSonarQubeEnv('sonar-scanner') {
-       sh 'mvn sonar:sonar'
+ stage('SonarQube Analysis') {
+     steps {
+         sh 'mvn sonar:sonar -Dsonar.language=java -Dsonar.login=admin -Dsonar.password=sonar'
      }
-   }
  }
 
      stage('Archive Artifacts') {
