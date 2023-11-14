@@ -26,7 +26,7 @@ pipeline{
 
  stage('SonarQube Analysis') {
      steps {
-         sh 'mvn clean verify sonar:sonar -Dsonar.language=java -Dsonar.login=admin -Dsonar.password=sonar'
+         sh 'mvn sonar:sonar -Dsonar.language=java -Dsonar.login=admin -Dsonar.password=sonar'
      }
  }
    stage('Code Coverage') {
