@@ -19,6 +19,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
 
@@ -55,7 +56,34 @@ private Product convertToProduct(ProductDTO productDTO){
 
     }
 
-  
+    @Test
+    void AddProduct_StockNotFound() {
+        // Arrange
+        ProductDTO productDto = ProductDTO.builder()
+                .idProduct(1L)
+                .category(ProductCategory.ELECTRONICS)
+                .title("test")
+                .stock(null)
+                .quantity(2)
+                .price(20.20f)
+                .build();
+
+        when(stockRepository.findById(1L)).thenReturn(Optional.empty());
+
+        assertThrows(RuntimeException.class, () -> productService.addProduct(productDto, 1L));
+    }
+
+    @Test
+    void RetrieveProduct_ProductNotFound() {
+        // Arrange
+        Long productId = 1L;
+
+        when(productRepository.findById(productId)).thenReturn(Optional.empty());
+
+        // Act & Assert
+        assertThrows(NullPointerException.class, () -> productService.retrieveProduct(productId));
+    }
+
 
     @Test
      void RetrieveAllProducts() {
