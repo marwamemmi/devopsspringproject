@@ -67,21 +67,13 @@ pipeline{
             }
         }
 
-stage("Nexus Deploy Stage") {
-    steps {
-        script {
-            try {
-                withMaven(maven: 'mvn') {
-                    sh 'mvn deploy -DskipTests'
-                }
-            } catch (Exception e) {
-                 echo "Le déploiement a échoué. Voici les détails de l'erreur : ${e.message}"
-                currentBuild.result = 'FAILURE'
-            }
-        }
-    }
-}
-
+ stage("Nexus Deploy Stage") {
+     steps {
+         withMaven(maven: 'mvn') {
+             sh 'mvn deploy -DskipTests'
+         }
+     }
+ }
         
 }
 }

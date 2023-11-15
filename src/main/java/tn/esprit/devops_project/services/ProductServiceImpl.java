@@ -3,6 +3,7 @@ package tn.esprit.devops_project.services;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import tn.esprit.devops_project.dto.ProductDTO;
 import tn.esprit.devops_project.entities.Product;
 import tn.esprit.devops_project.entities.ProductCategory;
 import tn.esprit.devops_project.entities.Stock;
@@ -19,12 +20,24 @@ public class ProductServiceImpl implements IProductService {
    final ProductRepository productRepository;
    final StockRepository stockRepository;
 
+
+
     @Override
-    public Product addProduct(Product product, Long idStock) {
-        Stock stock = stockRepository.findById(idStock).orElseThrow(() -> new RuntimeException("Stock not found with ID: " + idStock));
+    public Product addProduct(ProductDTO productDTO, Long idStock) {
+        Stock stock = stockRepository.findById(idStock)
+                .orElseThrow(() -> new RuntimeException("Stock not found with ID: " + idStock));
+
+        Product product = convertToProduct(productDTO);
         product.setStock(stock);
+
         return productRepository.save(product);
     }
+
+    private Product convertToProduct(ProductDTO productDTO) {
+       return Product.builder().idProduct(productDTO.getIdProduct()).title(productDTO.getTitle()).price(productDTO.getPrice()).quantity(productDTO
+               .getQuantity()).category(productDTO.getCategory()).build();
+    }
+
 
     @Override
     public Product retrieveProduct(Long id) {
