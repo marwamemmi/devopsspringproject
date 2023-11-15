@@ -1,4 +1,5 @@
-FROM maven:3.8.2-openjdk-11
-WORKDIR /app
-COPY . .
-RUN mvn clean install
+FROM marwamemmi/alpine:1.0.0
+RUN apk add openjdk11
+EXPOSE 8082
+ADD ./target/DevOps_Project-2.1.jar DevOps_Project-2.1.jar
+ENTRYPOINT [ "java", "-jar" ,"DevOps_Project-2.1.jar" ]
