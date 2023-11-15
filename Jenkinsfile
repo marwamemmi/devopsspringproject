@@ -47,11 +47,12 @@ pipeline{
  }
 
 
-     stage('Archive Artifacts') {
-            steps {
-                archiveArtifacts(artifacts: 'target/*.jar', allowEmptyArchive: true)
-            }
-        }
+ stage("Nexus Deploy Stage") {
+     steps {
+             sh 'mvn deploy -DskipTests'
+
+     }
+ }
 
 
 
@@ -67,11 +68,6 @@ pipeline{
             }
         }
 
- stage("Nexus Deploy Stage") {
-     steps {
-             sh 'mvn deploy -DskipTests'
-
-     }
- }}
+}
 
 }
