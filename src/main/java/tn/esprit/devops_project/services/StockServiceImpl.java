@@ -13,10 +13,6 @@ public class StockServiceImpl implements IStockService {
 
    private final StockRepository stockRepository;
 
-    @Override
-    public Stock addStock(Stock stock) {
-        return stockRepository.save(stock);
-    }
 
     @Override
     public Stock retrieveStock(Long id) {

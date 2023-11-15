@@ -21,7 +21,7 @@ public class ProductController {
     Product addProduct(@RequestBody ProductDTO product, @PathVariable Long idStock){
         return productService.addProduct(product,idStock);
     }
-    
+
 
     @GetMapping("/product/{id}")
     Product retrieveProduct(@PathVariable Long id){
