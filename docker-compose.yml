@@ -6,7 +6,7 @@ services:
     restart: unless-stopped
     env_file: ./.env
   environment:
-      - MYSQL_ALLOW_EMPTY_PASSWORD=yes  # Use this line instead
+      - MYSQL_ALLOW_EMPTY_PASSWORD=yes 
       - MYSQL_DATABASE=$MYSQLDB_DATABASE
     
     ports:
