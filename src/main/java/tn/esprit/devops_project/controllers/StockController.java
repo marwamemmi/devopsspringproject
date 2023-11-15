@@ -7,7 +7,6 @@ import tn.esprit.devops_project.entities.Stock;
 import tn.esprit.devops_project.services.IStockService;
 import java.util.List;
 
-@CrossOrigin(origins = "*")
 @RestController
 @AllArgsConstructor
 public class StockController {
