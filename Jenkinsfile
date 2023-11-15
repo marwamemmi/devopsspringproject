@@ -69,9 +69,8 @@ pipeline{
 
  stage("Nexus Deploy Stage") {
      steps {
-         withMaven(maven: 'mvn') {
              sh 'mvn deploy -DskipTests'
-         }
+
      }
  }}
 
