@@ -5,9 +5,10 @@ services:
     image: mysql:5.7
     restart: unless-stopped
     env_file: ./.env
-    environment:
-      - MYSQL_ROOT_PASSWORD=$MYSQLDB_ROOT_PASSWORD
+  environment:
+      - MYSQL_ALLOW_EMPTY_PASSWORD=yes  # Use this line instead
       - MYSQL_DATABASE=$MYSQLDB_DATABASE
+    
     ports:
       - $MYSQLDB_LOCAL_PORT:$MYSQLDB_DOCKER_PORT
     volumes:
