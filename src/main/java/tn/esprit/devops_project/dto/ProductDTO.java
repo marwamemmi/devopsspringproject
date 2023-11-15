@@ -1,8 +1,11 @@
 package tn.esprit.devops_project.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Builder;
 import tn.esprit.devops_project.entities.ProductCategory;
+import tn.esprit.devops_project.entities.Stock;
 
+import javax.persistence.ManyToOne;
 import java.io.Serializable;
 @Builder
 public class ProductDTO implements Serializable {
@@ -11,9 +14,27 @@ public class ProductDTO implements Serializable {
     private float price;
     private int quantity;
     private ProductCategory category;
-    // Vous pouvez ajouter d'autres champs nécessaires
+    @ManyToOne
+    @JsonIgnore
+    Stock stock;
 
-    // Ajoutez les getters et setters
+    public ProductDTO(Long idProduct, String title, float price, int quantity, ProductCategory category, Stock stock) {
+        this.idProduct = idProduct;
+        this.title = title;
+        this.price = price;
+        this.quantity = quantity;
+        this.category = category;
+        this.stock = stock;
+    }
+
+    public void setStock(Stock stock) {
+        this.stock = stock;
+    }
+
+    public Stock getStock() {
+        return stock;
+    }
+
     public Long getIdProduct() {
         return idProduct;
     }

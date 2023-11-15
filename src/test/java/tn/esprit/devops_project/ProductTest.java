@@ -7,6 +7,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import tn.esprit.devops_project.dto.ProductDTO;
 import tn.esprit.devops_project.entities.Product;
 import tn.esprit.devops_project.entities.ProductCategory;
 import tn.esprit.devops_project.entities.Stock;
@@ -33,13 +34,18 @@ class ProductTest {
 
     @InjectMocks
     private ProductServiceImpl productService;
+private Product convertToProduct(ProductDTO productDTO){
+    return Product.builder().idProduct(productDTO.getIdProduct()).title(productDTO.getTitle()).price(productDTO.getPrice()).quantity(productDTO
+            .getQuantity()).category(productDTO.getCategory()).build();
 
+}
     @Test
      void AddProduct() {
-        Product product = Product.builder().idProduct(1L).category(ProductCategory.ELECTRONICS).title("test").stock(null).quantity(2).price(20.20f).build();
+        ProductDTO productDto = ProductDTO.builder().idProduct(1L).category(ProductCategory.ELECTRONICS).title("test").stock(null).quantity(2).price(20.20f).build();
+        Product product = convertToProduct(productDto);
         when(productRepository.save(Mockito.any(Product.class))).thenReturn(product);
         when(stockRepository.findById(1L)).thenReturn(Optional.ofNullable(Mockito.mock(Stock.class)));
-        Product addedProduct = productService.addProduct(product, 1L);
+        Product addedProduct = productService.addProduct(productDto, 1L);
         Assertions.assertThat(addedProduct).isNotNull();
         Assertions.assertThat(addedProduct.getIdProduct()).isEqualTo(1L);
         Assertions.assertThat(addedProduct.getCategory()).isEqualTo(ProductCategory.ELECTRONICS);
