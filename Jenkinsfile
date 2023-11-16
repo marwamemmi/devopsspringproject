@@ -62,6 +62,14 @@ pipeline{
                 sh 'docker build -t marwamemmi/alpine:1.0.0  .'
             }
         }
+
+        stage("Push to DockerHub") {
+                                   steps {
+                                               sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+                                               sh 'docker push marwamemmi/alpine:1.0.0'
+
+                                       }
+                                   }
      stage('Docker Compose') {
             steps {
                 sh 'docker-compose up -d'
